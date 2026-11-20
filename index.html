@@ -297,7 +297,7 @@
                 // Zähler für Gesamtteilnehmer und Abendessen berechnen
 				const totalCount = data.length;
 				const dinnerCount = data.filter(entry => entry.abendessen).length;
-				statsBox.textContent = '👥' + ${totalCount} Teilnehmer gesamt  |  '🍕' + ${dinnerCount} beim Abendessen;
+				statsBox.textContent = '👥' + ${totalCount} + 'Teilnehmer gesamt  |  🍕' + ${dinnerCount} + 'beim Abendessen';
 				data.forEach(entry => {
 				const li = document.createElement('li');
 				// Linke Seite: Name & optionaler Spielwunsch
