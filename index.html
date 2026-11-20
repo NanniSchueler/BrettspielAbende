@@ -143,6 +143,7 @@
         <div id="list-section" class="hidden">
             <h2>✅ Du bist angemeldet!</h2>
             <p>Diese Kollegen sind bisher am Start:</p>
+			<div class="summary-box" id="summary-stats">Lade Übersicht...</div>
             <ul class="attendees" id="attendees-list">
                 <li>Lade Teilnehmer...</li>
             </ul>
@@ -163,7 +164,7 @@
 		
 		<h2>🍕 Essen, Snacks & Getränke</h2>
 		<p>Aus den vergangenen Runden ist ein kleiner Snackvorrat entstanden, der zum freien Knabbern und Naschen zur Verfügung steht. Wir freuen uns ebenfalls, wenn ihr etwas mitbringen möchtet.</p>
-		<p>Bei längeren Runden werden wir auch ein gemeinsames Abendessen organisieren. Wenn etwas geplant ist, findet ihr den Vorschlag oben unter dem Treffpunkt. <b> Bitte gebt bei der Anmeldung an, ob ihr mitesst!</b>
+		<p>Bei längeren Runden werden wir auch ein gemeinsames Abendessen organisieren. Wenn etwas geplant ist, findet ihr den Vorschlag oben unter dem Treffpunkt. <b> Bitte gebt bei der Anmeldung an, ob ihr mitesst!</b></p>
 		
     
 		<h2>♟️ Spielewünsche</h2>
@@ -297,7 +298,7 @@
 				// Zähler ohne direkte Emojis im Code (Unicode-Escapes sind 100% sicher)
                 const totalCount = data.length;
                 const dinnerCount = data.filter(entry => entry.abendessen).length;
-                statsBox.textContent = '👥' + ${totalCount} + 'Teilnehmer gesamt  |  🍕' + ${dinnerCount} + 'beim Abendessen';
+                statsBox.textContent = `👥 ${totalCount} Teilnehmer gesamt  |  🍕 ${dinnerCount} beim Abendessen`;
 
                 data.forEach(entry => {
                     const li = document.createElement('li');
