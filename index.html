@@ -294,38 +294,42 @@
                 const data = await response.json();
                 list.innerHTML = '';
 
-                // Zähler für Gesamtteilnehmer und Abendessen berechnen
-				const totalCount = data.length;
-				const dinnerCount = data.filter(entry => entry.abendessen).length;
-				statsBox.textContent = '👥' + ${totalCount} + 'Teilnehmer gesamt  |  🍕' + ${dinnerCount} + 'beim Abendessen';
-				data.forEach(entry => {
-				const li = document.createElement('li');
-				// Linke Seite: Name & optionaler Spielwunsch
-				const infoDiv = document.createElement('div');
-				const nameStrong = document.createElement('strong');
-				nameStrong.textContent = '🎲 ' + entry.name;
-				infoDiv.appendChild(nameStrong);
-				if (entry.spielwunsch) {
-				const wishSpan = document.createElement('span');
-				wishSpan.className = 'game-wish';
-				wishSpan.textContent = 'Spielwunsch: ' + entry.spielwunsch;
-				infoDiv.appendChild(wishSpan);
-				}
-				li.appendChild(infoDiv);
-				// Rechte Seite: Abendessen-Abzeichen
-				if (entry.abendessen) {
-				const badge = document.createElement('span');
-				badge.className = 'badge-dinner';
-				badge.textContent = '🍕 Abendessen';
-				li.appendChild(badge);
-				}
-				list.appendChild(li);
-				});
-				} catch (error) {
-				console.error(error);
-				list.innerHTML = 'Fehler beim Laden der Liste.';
-			}
-		}
-	</script>
+				// Zähler ohne direkte Emojis im Code (Unicode-Escapes sind 100% sicher)
+                const totalCount = data.length;
+                const dinnerCount = data.filter(entry => entry.abendessen).length;
+                statsBox.textContent = '👥' + ${totalCount} + 'Teilnehmer gesamt  |  🍕' + ${dinnerCount} + 'beim Abendessen';
+
+                data.forEach(entry => {
+                    const li = document.createElement('li');
+                    
+                    const infoDiv = document.createElement('div');
+                    const nameStrong = document.createElement('strong');
+                    nameStrong.textContent = '🎲 ' + entry.name;
+                    infoDiv.appendChild(nameStrong);
+
+                    if (entry.spielwunsch) {
+                        const wishSpan = document.createElement('span');
+                        wishSpan.className = 'game-wish';
+                        wishSpan.textContent = 'Spielwunsch: ' + entry.spielwunsch;
+                        infoDiv.appendChild(wishSpan);
+                    }
+                    li.appendChild(infoDiv);
+
+                    if (entry.abendessen) {
+                        const badge = document.createElement('span');
+                        badge.className = 'badge-dinner';
+                        badge.textContent = '🍕 Abendessen';
+                        li.appendChild(badge);
+                    }
+
+                    list.appendChild(li);
+                });
+            } catch (error) {
+                console.error(error);
+                list.innerHTML = '<li>Fehler beim Laden der Liste.</li>';
+            }
+        }
+    </script>
 </body>
 </html>
+
