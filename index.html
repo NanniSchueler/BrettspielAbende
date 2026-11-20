@@ -295,7 +295,6 @@
                 const data = await response.json();
                 list.innerHTML = '';
 
-				// Zähler ohne direkte Emojis im Code (Unicode-Escapes sind 100% sicher)
                 const totalCount = data.length;
                 const dinnerCount = data.filter(entry => entry.abendessen).length;
                 statsBox.textContent = `👥 ${totalCount} Teilnehmer gesamt  |  🍕 ${dinnerCount} beim Abendessen`;
