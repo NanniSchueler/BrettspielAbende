@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SNSB-Brettspielabend</title>
-    <!-- Supabase Bibliothek einbinden -->
-    <script src="https://jsdelivr.net"></script>
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -28,75 +26,24 @@
             color: #fff;
             text-align: center;
         }
-        .hero h1 {
-            margin: 0;
-            font-size: 2.2em;
-        }
-        .hero .date {
-            font-size: 1.5em;
-            color: #f1c40f;
-            font-weight: bold;
-            margin: 10px 0;
-        }
-        .form-group {
-            display: flex;
-            gap: 10px;
-            margin-top: 15px;
-        }
-        input[type="text"] {
-            flex: 1;
-            padding: 12px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 1em;
-        }
-        button {
-            padding: 12px 20px;
-            background-color: #27ae60;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 1em;
-            cursor: pointer;
-            font-weight: bold;
-        }
-        button:hover {
-            background-color: #219150;
-        }
-        button.btn-cancel {
-            background-color: #e74c3c;
-            margin-top: 15px;
-            padding: 8px 15px;
-            font-size: 0.9em;
-        }
-        button.btn-cancel:hover {
-            background-color: #c0392b;
-        }
-        ul.attendees {
-            list-style: none;
-            padding: 0;
-        }
-        ul.attendees li {
-            background: #eef2f7;
-            margin: 5px 0;
-            padding: 8px 12px;
-            border-radius: 5px;
-            display: flex;
-            justify-content: space-between;
-        }
-        .hidden {
-            display: none;
-        }
+        .hero h1 { margin: 0; font-size: 2.2em; }
+        .hero .date { font-size: 1.5em; color: #f1c40f; font-weight: bold; margin: 10px 0; }
+        .form-group { display: flex; gap: 10px; margin-top: 15px; }
+        input[type="text"] { flex: 1; padding: 12px; border: 1px solid #ccc; border-radius: 5px; font-size: 1em; }
+        button { padding: 12px 20px; background-color: #27ae60; color: white; border: none; border-radius: 5px; font-size: 1em; cursor: pointer; font-weight: bold; }
+        button:hover { background-color: #219150; }
+        button.btn-cancel { background-color: #e74c3c; margin-top: 15px; padding: 8px 15px; font-size: 0.9em; }
+        button.btn-cancel:hover { background-color: #c0392b; }
+        ul.attendees { list-style: none; padding: 0; }
+        ul.attendees li { background: #eef2f7; margin: 5px 0; padding: 8px 12px; border-radius: 5px; }
+        .hidden { display: none; }
     </style>
 </head>
-<body>
-
-    <!-- GROSSER BEREICH FÜR DEN NÄCHSTEN TERMIN -->
-    <div class="card hero">
-        <h1>🎲 Nächster Brettspielabend</h1>
+<div class="card hero">
+        <h1>🎲 Nächster SNSB Brettspielabend</h1>
         <!-- HIER DEN AKTUELLEN TERMIN EINTRAGEN (Wichtig: Auch unten im JS anpassen!) -->
-        <div class="date" id="current-event-display">Donnerstag, 10. Dezember 2026 – ab 17:30 Uhr</div>
-        <p>Raum: Konferenzraum „Atlantis“ (3. OG)</p>
+        <div class="date" id="current-event-display">Dienstag, 01. Dezember 2026 – ab 17:30 Uhr</div>
+        <p>Raum: Konferenzraum 110 (1. OG)</p>
     </div>
 
     <!-- ANMELDUNG & TEILNEHMERLISTE -->
@@ -124,38 +71,44 @@
     <div class="card">
         <h2>📅 Weitere geplante Termine</h2>
         <ul>
-            <li><strong>Donnerstag, 14. Januar 2027</strong> – Neujahrs-Spielen</li>
-            <li><strong>Donnerstag, 11. Februar 2027</strong> – Kennerspiele-Special</li>
+            <li><strong>Donnerstag, 17. Dezember 2026</strong> – Letzte Runde 2026</li>
+            <li><strong>Neue Termine kommen...</strong> </li>
         </ul>
 
         <h2>ℹ️ Infos & Ablauf</h2>
-        <p>Wir treffen uns einmal im Monat nach Feierabend in entspannter Runde. Snacks und Getränke stehen bereit. Bringt gerne eure eigenen Lieblingsspiele mit – von schnellen Partyspielen bis zu komplexen Strategiespielen ist alles willkommen!</p>
-    </div>
+        <p>Wir treffen uns regelmäßig nach Feierabend um abteilungs- und institutsübergreifend Leute zusammenzubringen und einen entspannten und ungezwungenen Abend miteinander zu verbringen. Dabei sind alle willkommen, ganz unabhängig davon, wie viel oder wenig Erfahrung mit Brettspielen vorhanden ist. Ob ihr regelmäßig spielt, schon lange nicht mehr gespielt habt oder einfach neugierig seid und einen gemütlichen Abend mit anderen verbringen möchtet: Wir möchten gemeinsam spielen, Spaß haben und eine gute Zeit miteinander verbringen. =)</p>
+		<p>Aus den vergangenen Runden ist ein kleiner Snackvorrat entstanden, der zum freien Knabbern zur Verfügung steht. Wir freuen uns ebenfalls, wenn ihr etwas mitbringen möchtet.
+		Bringt gerne eure eigenen Lieblingsspiele mit – von schnellen Partyspielen bis zu komplexen Strategiespielen ist alles willkommen!</p>
+    
+		<h2>♟️ Spielewünsche</h2>
+		<p>Hier kommt mehr Text</p>
+	
+	</div>
 
     <script>
         // ==========================================
         // KONFIGURATION (Hier deine Daten eintragen)
         // ==========================================
-        const SUPABASE_URL = 'https://fvfndqhqdecefofbnktp.supabase.co/rest/v1/';
-        const SUPABASE_KEY = 'sb_publishable_D6OBZz_ZraNSOas_rVAlBg_ATvBPOnR';
-        
-        // Eindeutige ID für den aktuellen Termin
+        const SUPABASE_URL = 'https://supabase.co';
+        const SUPABASE_KEY = 'DEIN_PUBLISHABLE_ODER_ANON_KEY';
         const EVENT_ID = '2026-12-10'; 
         // ==========================================
 
-        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        const API_URL = `${SUPABASE_URL}/rest/v1/anmeldungen`;
+        const HEADERS = {
+            'apikey': SUPABASE_KEY,
+            'Authorization': `Bearer ${SUPABASE_KEY}`,
+            'Content-Type': 'application/json'
+        };
         const STORAGE_KEY = 'registered_id_' + EVENT_ID;
 
-        // Prüfen, ob der Nutzer sich für diesen Termin schon eingetragen hat
-        window.onload = function() {
-            if (localStorage.getItem(STORAGE_KEY)) {
-                showAttendees();
-            }
-        };
+        if (localStorage.getItem(STORAGE_KEY)) {
+            showAttendees();
+        }
 
-        // Funktion zum Eintragen
         async function register() {
             const nameInput = document.getElementById('name-input');
+            const btn = document.getElementById('submit-btn');
             const name = nameInput.value.trim();
 
             if (!name) {
@@ -163,72 +116,94 @@
                 return;
             }
 
-            // Daten senden und die erstellte Zeile (inkl. ID) direkt zurückgeben lassen
-            const { data, error } = await supabaseClient
-                .from('anmeldungen')
-                .insert([{ name: name, event_id: EVENT_ID }])
-                .select();
+            btn.disabled = true;
+            btn.textContent = 'Speichere...';
 
-            if (error) {
-                alert('Fehler beim Speichern: ' + error.message);
-            } else if (data && data.length > 0) {
-                // Die eindeutige Datenbank-ID des Nutzers im Browser speichern
-                localStorage.setItem(STORAGE_KEY, data[0].id);
-                nameInput.value = '';
-                showAttendees();
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { ...HEADERS, 'Prefer': 'return=representation' },
+                    body: JSON.stringify({ name: name, event_id: EVENT_ID })
+                });
+
+                if (!response.ok) {
+                    const err = await response.json();
+                    throw new Error(err.message || 'Fehler beim Speichern');
+                }
+
+                const data = await response.json();
+                if (data && data.length > 0) {
+                    localStorage.setItem(STORAGE_KEY, data[0].id);
+                    nameInput.value = '';
+                    showAttendees();
+                }
+            } catch (error) {
+                console.error(error);
+                alert('Fehler: ' + error.message);
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Dabei!';
             }
         }
 
-        // Funktion zum Abmelden
         async function unregister() {
             const entryId = localStorage.getItem(STORAGE_KEY);
-            
-            if (!entryId) return;
+            if (!entryId || entryId === 'undefined') {
+                localStorage.removeItem(STORAGE_KEY);
+                location.reload();
+                return;
+            }
 
             if (!confirm('Möchtest du dich wirklich vom Brettspielabend abmelden?')) {
                 return;
             }
 
-            // Eintrag anhand seiner ID aus Supabase löschen
-            const { error } = await supabaseClient
-                .from('anmeldungen')
-                .delete()
-                .eq('id', entryId);
+            try {
+                const response = await fetch(`${API_URL}?id=eq.${entryId}`, {
+                    method: 'DELETE',
+                    headers: HEADERS
+                });
 
-            if (error) {
-                alert('Fehler beim Abmelden: ' + error.message);
-            } else {
-                // Lokalen Vermerk löschen und Ansicht zurücksetzen
+                if (!response.ok) {
+                    throw new Error('Löschen fehlgeschlagen');
+                }
+
                 localStorage.removeItem(STORAGE_KEY);
                 document.getElementById('list-section').classList.add('hidden');
                 document.getElementById('signup-section').classList.remove('hidden');
+            } catch (error) {
+                alert('Fehler beim Abmelden: ' + error.message);
             }
         }
 
-        // Teilnehmerliste laden und anzeigen
         async function showAttendees() {
             document.getElementById('signup-section').classList.add('hidden');
             document.getElementById('list-section').classList.remove('hidden');
 
-            const { data, error } = await supabaseClient
-                .from('anmeldungen')
-                .select('name')
-                .eq('event_id', EVENT_ID)
-                .order('created_at', { ascending: true });
-
             const list = document.getElementById('attendees-list');
-            list.innerHTML = '';
 
-            if (error) {
+            try {
+                const response = await fetch(`${API_URL}?event_id=eq.${EVENT_ID}&select=name&order=created_at.asc`, {
+                    method: 'GET',
+                    headers: HEADERS
+                });
+
+                if (!response.ok) {
+                    throw new Error('Laden fehlgeschlagen');
+                }
+
+                const data = await response.json();
+                list.innerHTML = '';
+
+                data.forEach(entry => {
+                    const li = document.createElement('li');
+                    li.textContent = '🎲 ' + entry.name;
+                    list.appendChild(li);
+                });
+            } catch (error) {
+                console.error(error);
                 list.innerHTML = '<li>Fehler beim Laden der Liste.</li>';
-                return;
             }
-
-            data.forEach(entry => {
-                const li = document.createElement('li');
-                li.textContent = '🎲 ' + entry.name;
-                list.appendChild(li);
-            });
         }
     </script>
 </body>
