@@ -28,22 +28,97 @@
         }
         .hero h1 { margin: 0; font-size: 2.2em; }
         .hero .date { font-size: 1.5em; color: #f1c40f; font-weight: bold; margin: 10px 0; }
-        .form-group { display: flex; gap: 10px; margin-top: 15px; }
-        input[type="text"] { flex: 1; padding: 12px; border: 1px solid #ccc; border-radius: 5px; font-size: 1em; }
-        button { padding: 12px 20px; background-color: #27ae60; color: white; border: none; border-radius: 5px; font-size: 1em; cursor: pointer; font-weight: bold; }
+        
+        /* Formular-Styling */
+        .form-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 15px;
+        }
+        input[type="text"] {
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1em;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #f8f9fa;
+            padding: 12px;
+            border-radius: 5px;
+            border: 1px solid #e1e4e8;
+            cursor: pointer;
+        }
+        .checkbox-group input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+        button {
+            padding: 12px 20px;
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            cursor: pointer;
+            font-weight: bold;
+        }
         button:hover { background-color: #219150; }
         button.btn-cancel { background-color: #e74c3c; margin-top: 15px; padding: 8px 15px; font-size: 0.9em; }
         button.btn-cancel:hover { background-color: #c0392b; }
+
+        /* Teilnehmerliste */
+        .summary-box {
+            background: #e8f8f5;
+            border-left: 4px solid #27ae60;
+            padding: 10px 15px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
         ul.attendees { list-style: none; padding: 0; }
-        ul.attendees li { background: #eef2f7; margin: 5px 0; padding: 8px 12px; border-radius: 5px; }
+        ul.attendees li {
+            background: #eef2f7;
+            margin: 8px 0;
+            padding: 10px 14px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .badge-dinner {
+            background: #ffeaa7;
+            color: #d35400;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.85em;
+            font-weight: bold;
+        }
+        .game-wish {
+            font-size: 0.9em;
+            color: #555;
+            display: block;
+            margin-top: 2px;
+        }
         .hidden { display: none; }
     </style>
 </head>
-<div class="card hero">
+<body>
+
+    <div class="card hero">
         <h1>🎲 Nächster SNSB Brettspielabend</h1>
         <!-- HIER DEN AKTUELLEN TERMIN EINTRAGEN (Wichtig: Auch unten im JS anpassen!) -->
         <div class="date" id="current-event-display">Dienstag, 01. Dezember 2026 – ab 17:30 Uhr</div>
         <p>Raum: Konferenzraum 110 (1. OG)</p>
+		<p>Abendessen: TK Pizza Baguettes (50ct pro Stück)</p>
     </div>
 
     <!-- ANMELDUNG & TEILNEHMERLISTE -->
@@ -52,7 +127,7 @@
             <h2>Bist du dabei?</h2>
             <p>Trag deinen Namen ein, um zuzusagen und zu sehen, wer noch mitspielt.</p>
             <div class="form-group">
-                <input type="text" id="name-input" placeholder="Dein Vor- und Nachname (optional: Spielwunsch)">
+                <input type="text" id="name-input" placeholder="Dein Vor- und Nachname (optional: Spielwunsch und/oder Essenswunsch)">
                 <button id="submit-btn" onclick="register()">Dabei!</button>
             </div>
         </div>
@@ -76,12 +151,15 @@
         </ul>
 
         <h2>ℹ️ Infos & Ablauf</h2>
-        <p>Wir treffen uns regelmäßig nach Feierabend um abteilungs- und institutsübergreifend Leute zusammenzubringen und einen entspannten und ungezwungenen Abend miteinander zu verbringen. Dabei sind alle willkommen, ganz unabhängig davon, wie viel oder wenig Erfahrung mit Brettspielen vorhanden ist. Ob ihr regelmäßig spielt, schon lange nicht mehr gespielt habt oder einfach neugierig seid und einen gemütlichen Abend mit anderen verbringen möchtet: Wir möchten gemeinsam spielen, Spaß haben und eine gute Zeit miteinander verbringen. =)</p>
-		<p>Aus den vergangenen Runden ist ein kleiner Snackvorrat entstanden, der zum freien Knabbern zur Verfügung steht. Wir freuen uns ebenfalls, wenn ihr etwas mitbringen möchtet.
-		Bringt gerne eure eigenen Lieblingsspiele mit – von schnellen Partyspielen bis zu komplexen Strategiespielen ist alles willkommen!</p>
+        <p>Wir treffen uns regelmäßig nach Feierabend um abteilungs- und institutsübergreifend Leute zusammenzubringen und einen entspannten und ungezwungenen Abend miteinander zu verbringen. Dabei sind alle willkommen, ganz unabhängig davon, ob ihr viel oder wenig Erfahrung mit Brettspielen habt, ob ihr regelmäßig spielt, schon lange nicht mehr gespielt habt oder einfach neugierig seid und einen gemütlichen Abend mit anderen verbringen möchtet: Wir möchten gemeinsam spielen, Spaß haben und eine gute Zeit miteinander verbringen. =)</p>
+		
+		<h2>🍕 Essen, Snacks & Getränke</h2>
+		<p>Aus den vergangenen Runden ist ein kleiner Snackvorrat entstanden, der zum freien Knabbern und Naschen zur Verfügung steht. Wir freuen uns ebenfalls, wenn ihr etwas mitbringen möchtet.</p>
+		<p>Bei längeren Runden werden wir auch ein gemeinsames Abendessen organisieren. Wenn etwas geplant ist, findet ihr den Vorschlag oben unter dem Treffpunkt. <b> Bitte gebt bei der Anmeldung an, ob (und wie viel) ihr mitesst!</b>
+		
     
 		<h2>♟️ Spielewünsche</h2>
-		<p>Hier kommt mehr Text</p>
+		<p>Bringt gerne eure eigenen Lieblingsspiele mit – von schnellen Partyspielen bis zu komplexen Strategiespielen ist alles willkommen!</p>
 	
 	</div>
 
@@ -91,7 +169,7 @@
         // ==========================================
         const SUPABASE_URL = 'https://fvfndqhqdecefofbnktp.supabase.co';
         const SUPABASE_KEY = 'sb_publishable_D6OBZz_ZraNSOas_rVAlBg_ATvBPOnR';
-        const EVENT_ID = '2026-12-10'; 
+        const EVENT_ID = '2026-12-01'; 
         // ==========================================
 
         const API_URL = `${SUPABASE_URL}/rest/v1/anmeldungen`;
@@ -108,8 +186,13 @@
 
         async function register() {
             const nameInput = document.getElementById('name-input');
+            const gameInput = document.getElementById('game-input');
+            const dinnerInput = document.getElementById('dinner-input');
             const btn = document.getElementById('submit-btn');
+
             const name = nameInput.value.trim();
+            const spielwunsch = gameInput.value.trim();
+            const abendessen = dinnerInput.checked;
 
             if (!name) {
                 alert('Bitte gib deinen Namen ein!');
@@ -123,7 +206,12 @@
                 const response = await fetch(API_URL, {
                     method: 'POST',
                     headers: { ...HEADERS, 'Prefer': 'return=representation' },
-                    body: JSON.stringify({ name: name, event_id: EVENT_ID })
+                    body: JSON.stringify({ 
+                        name: name, 
+                        event_id: EVENT_ID,
+                        spielwunsch: spielwunsch,
+                        abendessen: abendessen
+                    })
                 });
 
                 if (!response.ok) {
@@ -135,6 +223,8 @@
                 if (data && data.length > 0) {
                     localStorage.setItem(STORAGE_KEY, data[0].id);
                     nameInput.value = '';
+                    gameInput.value = '';
+                    dinnerInput.checked = false;
                     showAttendees();
                 }
             } catch (error) {
@@ -181,9 +271,10 @@
             document.getElementById('list-section').classList.remove('hidden');
 
             const list = document.getElementById('attendees-list');
+            const statsBox = document.getElementById('summary-stats');
 
             try {
-                const response = await fetch(`${API_URL}?event_id=eq.${EVENT_ID}&select=name&order=created_at.asc`, {
+                const response = await fetch(`${API_URL}?event_id=eq.${EVENT_ID}&select=name,spielwunsch,abendessen&order=created_at.asc`, {
                     method: 'GET',
                     headers: HEADERS
                 });
@@ -195,16 +286,38 @@
                 const data = await response.json();
                 list.innerHTML = '';
 
-                data.forEach(entry => {
-                    const li = document.createElement('li');
-                    li.textContent = '🎲 ' + entry.name;
-                    list.appendChild(li);
-                });
-            } catch (error) {
-                console.error(error);
-                list.innerHTML = '<li>Fehler beim Laden der Liste.</li>';
-            }
-        }
-    </script>
+                // Zähler für Gesamtteilnehmer und Abendessen berechnen
+				const totalCount = data.length;
+				const dinnerCount = data.filter(entry => entry.abendessen).length;
+				statsBox.textContent = 👥 ${totalCount} Teilnehmer gesamt  |  🍕 ${dinnerCount} beim Abendessen;
+				data.forEach(entry => {
+				const li = document.createElement('li');
+				// Linke Seite: Name & optionaler Spielwunsch
+				const infoDiv = document.createElement('div');
+				const nameStrong = document.createElement('strong');
+				nameStrong.textContent = '🎲 ' + entry.name;
+				infoDiv.appendChild(nameStrong);
+				if (entry.spielwunsch) {
+				const wishSpan = document.createElement('span');
+				wishSpan.className = 'game-wish';
+				wishSpan.textContent = 'Spielwunsch: ' + entry.spielwunsch;
+				infoDiv.appendChild(wishSpan);
+				}
+				li.appendChild(infoDiv);
+				// Rechte Seite: Abendessen-Abzeichen
+				if (entry.abendessen) {
+				const badge = document.createElement('span');
+				badge.className = 'badge-dinner';
+				badge.textContent = '🍕 Abendessen';
+				li.appendChild(badge);
+				}
+				list.appendChild(li);
+				});
+				} catch (error) {
+				console.error(error);
+				list.innerHTML = 'Fehler beim Laden der Liste.';
+			}
+		}
+	</script>
 </body>
 </html>
