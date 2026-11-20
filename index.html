@@ -122,12 +122,20 @@
     </div>
 
     <!-- ANMELDUNG & TEILNEHMERLISTE -->
-    <div class="card">
+	<div class="card">
         <div id="signup-section">
             <h2>Bist du dabei?</h2>
-            <p>Trag deinen Namen ein, um zuzusagen und zu sehen, wer noch mitspielt.</p>
-            <div class="form-group">
-                <input type="text" id="name-input" placeholder="Dein Vor- und Nachname (optional: Spielwunsch und/oder Essenswunsch)">
+            <p>Trag dich ein, um zuzusagen und zu sehen, wer noch mitspielt.</p>
+            
+            <div class="form-stack">
+                <input type="text" id="name-input" placeholder="Dein Vor- und Nachname *">
+                <input type="text" id="game-input" placeholder="Spielwunsch oder eigenes Spiel (optional)">
+                
+                <label class="checkbox-group">
+                    <input type="checkbox" id="dinner-input">
+                    <span>🍕 Ich bin auch beim gemeinsamen Abendessen dabei</span>
+                </label>
+
                 <button id="submit-btn" onclick="register()">Dabei!</button>
             </div>
         </div>
