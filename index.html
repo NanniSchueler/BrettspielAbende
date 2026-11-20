@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SNSB-Brettspielabend</title>
+    <!-- Supabase Bibliothek einbinden -->
+    <script src="https://jsdelivr.net"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            line-height: 1.6;
+            max-width: 700px;
+            margin: 40px auto;
+            padding: 0 20px;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        .card {
+            background: #fff;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            margin-bottom: 25px;
+        }
+        .hero {
+            background: #2c3e50;
+            color: #fff;
+            text-align: center;
+        }
+        .hero h1 {
+            margin: 0;
+            font-size: 2.2em;
+        }
+        .hero .date {
+            font-size: 1.5em;
+            color: #f1c40f;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        .form-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        input[type="text"] {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+        button {
+            padding: 12px 20px;
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        button:hover {
+            background-color: #219150;
+        }
+        button.btn-cancel {
+            background-color: #e74c3c;
+            margin-top: 15px;
+            padding: 8px 15px;
+            font-size: 0.9em;
+        }
+        button.btn-cancel:hover {
+            background-color: #c0392b;
+        }
+        ul.attendees {
+            list-style: none;
+            padding: 0;
+        }
+        ul.attendees li {
+            background: #eef2f7;
+            margin: 5px 0;
+            padding: 8px 12px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- GROSSER BEREICH FÜR DEN NÄCHSTEN TERMIN -->
+    <div class="card hero">
+        <h1>🎲 Nächster Brettspielabend</h1>
+        <!-- HIER DEN AKTUELLEN TERMIN EINTRAGEN (Wichtig: Auch unten im JS anpassen!) -->
+        <div class="date" id="current-event-display">Donnerstag, 10. Dezember 2026 – ab 17:30 Uhr</div>
+        <p>Raum: Konferenzraum „Atlantis“ (3. OG)</p>
+    </div>
+
+    <!-- ANMELDUNG & TEILNEHMERLISTE -->
+    <div class="card">
+        <div id="signup-section">
+            <h2>Bist du dabei?</h2>
+            <p>Trag deinen Namen ein, um zuzusagen und zu sehen, wer noch mitspielt.</p>
+            <div class="form-group">
+                <input type="text" id="name-input" placeholder="Dein Vor- und Nachname (optional: Spielwunsch)">
+                <button onclick="register()">Dabei!</button>
+            </div>
+        </div>
+
+        <div id="list-section" class="hidden">
+            <h2>✅ Du bist angemeldet!</h2>
+            <p>Diese Kollegen sind bisher am Start:</p>
+            <ul class="attendees" id="attendees-list">
+                <li>Lade Teilnehmer...</li>
+            </ul>
+            <button class="btn-cancel" onclick="unregister()">Doch keine Zeit (Abmelden)</button>
+        </div>
+    </div>
+
+    <!-- WEITERE TERMINE & INFOS -->
+    <div class="card">
+        <h2>📅 Weitere geplante Termine</h2>
+        <ul>
+            <li><strong>Donnerstag, 14. Januar 2027</strong> – Neujahrs-Spielen</li>
+            <li><strong>Donnerstag, 11. Februar 2027</strong> – Kennerspiele-Special</li>
+        </ul>
+
+        <h2>ℹ️ Infos & Ablauf</h2>
+        <p>Wir treffen uns einmal im Monat nach Feierabend in entspannter Runde. Snacks und Getränke stehen bereit. Bringt gerne eure eigenen Lieblingsspiele mit – von schnellen Partyspielen bis zu komplexen Strategiespielen ist alles willkommen!</p>
+    </div>
+
+    <script>
+        // ==========================================
+        // KONFIGURATION (Hier deine Daten eintragen)
+        // ==========================================
+        const SUPABASE_URL = 'https://fvfndqhqdecefofbnktp.supabase.co/rest/v1/';
+        const SUPABASE_KEY = 'sb_publishable_D6OBZz_ZraNSOas_rVAlBg_ATvBPOnR';
+        
+        // Eindeutige ID für den aktuellen Termin
+        const EVENT_ID = '2026-12-10'; 
+        // ==========================================
+
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        const STORAGE_KEY = 'registered_id_' + EVENT_ID;
+
+        // Prüfen, ob der Nutzer sich für diesen Termin schon eingetragen hat
+        window.onload = function() {
+            if (localStorage.getItem(STORAGE_KEY)) {
+                showAttendees();
+            }
+        };
+
+        // Funktion zum Eintragen
+        async function register() {
+            const nameInput = document.getElementById('name-input');
+            const name = nameInput.value.trim();
+
+            if (!name) {
+                alert('Bitte gib deinen Namen ein!');
+                return;
+            }
+
+            // Daten senden und die erstellte Zeile (inkl. ID) direkt zurückgeben lassen
+            const { data, error } = await supabaseClient
+                .from('anmeldungen')
+                .insert([{ name: name, event_id: EVENT_ID }])
+                .select();
+
+            if (error) {
+                alert('Fehler beim Speichern: ' + error.message);
+            } else if (data && data.length > 0) {
+                // Die eindeutige Datenbank-ID des Nutzers im Browser speichern
+                localStorage.setItem(STORAGE_KEY, data[0].id);
+                nameInput.value = '';
+                showAttendees();
+            }
+        }
+
+        // Funktion zum Abmelden
+        async function unregister() {
+            const entryId = localStorage.getItem(STORAGE_KEY);
+            
+            if (!entryId) return;
+
+            if (!confirm('Möchtest du dich wirklich vom Brettspielabend abmelden?')) {
+                return;
+            }
+
+            // Eintrag anhand seiner ID aus Supabase löschen
+            const { error } = await supabaseClient
+                .from('anmeldungen')
+                .delete()
+                .eq('id', entryId);
+
+            if (error) {
+                alert('Fehler beim Abmelden: ' + error.message);
+            } else {
+                // Lokalen Vermerk löschen und Ansicht zurücksetzen
+                localStorage.removeItem(STORAGE_KEY);
+                document.getElementById('list-section').classList.add('hidden');
+                document.getElementById('signup-section').classList.remove('hidden');
+            }
+        }
+
+        // Teilnehmerliste laden und anzeigen
+        async function showAttendees() {
+            document.getElementById('signup-section').classList.add('hidden');
+            document.getElementById('list-section').classList.remove('hidden');
+
+            const { data, error } = await supabaseClient
+                .from('anmeldungen')
+                .select('name')
+                .eq('event_id', EVENT_ID)
+                .order('created_at', { ascending: true });
+
+            const list = document.getElementById('attendees-list');
+            list.innerHTML = '';
+
+            if (error) {
+                list.innerHTML = '<li>Fehler beim Laden der Liste.</li>';
+                return;
+            }
+
+            data.forEach(entry => {
+                const li = document.createElement('li');
+                li.textContent = '🎲 ' + entry.name;
+                list.appendChild(li);
+            });
+        }
+    </script>
+</body>
+</html>
